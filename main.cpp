@@ -1,89 +1,102 @@
 #include<iostream>
 #include<string>
-#include<math.h>
-#include"loan.h"
+#include"inventory.h"
 using namespace std;
-int main ()
+int main()
 {
-    int n;
-    loan emi[100];
-    cout<<"enter total number of customer you want to add in system :";
+    int n,i,ch,id;
+
+    cout<<"enter total number of item you want to add in system :";
     cin>>n;
-    int i;
-    int ch;
-    for(i=0; i<n; i++)
+
+    inventory item[100];
+
+    for(i=0;i<n;i++)
     {
-        int lid;
+        int iid;
         string name;
-        float total_loan_amount;
-        float annual_interest_rate;
-        float loan_tenure;
+        int price;
+        int stock;
 
-        cout<<"enter loan id :";
-        cin>>lid;
+        cout<<"enter item id :";
+        cin>>iid;
 
-        cout<<"enter Applicant name :";
+        cout<<"enter name of item :";
         cin>>name;
 
-        cout<<"enter Total loan amount :";
-        cin>>total_loan_amount;
+        cout<<"enter price of the item :";
+        cin>>price;
 
-        cout<<"enter Annual interest rate :";
-        cin>>annual_interest_rate;
+        cout<<"enter stock of the item :";
+        cin>>stock;
 
-annual_interest_rate=annual_interest_rate/(1200);
-        cout<<"enter Loan tenure (months)  :";
-        cin>>loan_tenure;
-
-        emi[i]=loan(lid,name,total_loan_amount,annual_interest_rate,loan_tenure);
+        item[i]=inventory(iid,name,price,stock);
     }
+
 option:
-    cout<<"enter 1. display loan deatail with monthley emi"<<endl;
-    cout<<"enter 2. for again add loan details"<<endl;
-    cout<<"enter 3. exit";
+
+    cout<<"\nenter 1. to add stock"<<endl;
+    cout<<"enter 2. to sell item"<<endl;
+    cout<<"enter 3. to disply all item"<<endl;
+    cout<<"enter 4. to exit"<<endl;
+    cout<<"enter choice :";
     cin>>ch;
+
     switch(ch)
     {
- case 1:
-     for(i=0;i<n;i++)
-     {
+    case 1:
+        cout<<"enter item id :";
+        cin>>id;
 
-          emi[i].display();
-     }
-     break;
- case 2:
-     for(i=n;i<100;i++)
-     {
-         int lid;
-        string name;
-        float total_loan_amount;
-        float annual_interest_rate;
-        float loan_tenure;
+        for(i=0;i<n;i++)
+        {
+            if(item[i].getid()==id)
+            {
+                item[i].add();
+                break;
+            }
+        }
+         if(i==n)
+        {
+            cout<<"item not found.."<<endl;
+        }
+        goto option;
 
-         cout<<"enter loan id :";
-        cin>>lid;
+    case 2:
+        cout<<"enter item id :";
+        cin>>id;
 
-        cout<<"enter Applicant name :";
-        cin>>name;
+        for(i=0;i<n;i++)
+        {
+            if(item[i].getid()==id)
+            {
+                item[i].sold();
+                break;
+            }
+        }
+        if(i==n)
+        {
+            cout<<"item not found.."<<endl;
+        }
+        goto option;
 
-        cout<<"enter Total loan amount :";
-        cin>>total_loan_amount;
+    case 3:
+        for(i=0;i<n;i++)
+        {
+            cout<<"\nitem :"<<i+1<<endl;
+            item[i].disply();
+        }
+        goto option;
 
-        cout<<"enter Annual interest rate :";
-        cin>>annual_interest_rate;
-        emi[n]=loan(lid,name,total_loan_amount,annual_interest_rate,loan_tenure);
+    case 4:
+        cout<<"thank you..for using this system.."<<endl;
+        break;
 
-annual_interest_rate=annual_interest_rate/(1200);
-
-     }
-     goto option;
- case 3:
-    cout<<"thank you";
-    break;
- default:
-    cout<<"invalid choice ..\nenter choice again.."<<endl;
+    default:
+        cout<<"invalid choice .. please enter valid choice .."<<endl;
+        goto option;
     }
+
     return 0;
 }
-
 
